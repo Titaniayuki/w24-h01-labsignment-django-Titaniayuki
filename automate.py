@@ -7,7 +7,7 @@ full_path = os.path.join("venv", "bin", "activate")
 print("first: "+ full_path)
 #venv.create(venv_dir)
 
-subprocess.Popen("virtualenv venv --python=python3")
+subprocess.Popen("virtualenv venv --python=python3", shell=True)
 
 #subprocess.run("source venv/bin/activate")
 
