@@ -1,30 +1,34 @@
 import venv
 import os
 import subprocess
+import sys
 
-venv_dir = os.path.join(os.getcwd(), "venv")
-full_path = os.path.join(os.getcwd(), "venv", "bin", "activate")
-print("FULL PATH: "+ full_path)
-#venv.create(venv_dir)
+print("current directory: " + os.getcwd())
+#create virtual env
+os.system("virtualenv venv --python=python3")
 
-subprocess.Popen("virtualenv venv --python=python3", shell=True)
-print("CREATED VIRTUALENV")
-#subprocess.run("source venv/bin/activate")
+python_path = os.path.join(os.getcwd(), "venv", "bin", "python-script.py")
+full_path = os.path.join(os.getcwd(), "venv", "bin", "activate_this.py")
+print("full path: " + full_path)
+print("python path: " + python_path)
 
-subprocess.Popen("source " + full_path, shell=True)
-subprocess.Popen("pip install -r requirements.txt", shell=True)
-print("INSTALL DJANGO")
+#activate virtual env
+exec(open(full_path).read(), {'__file__': full_path})
+os.system("which python")
 
+#install django
+os.system("pip install -r requirements.txt")
 lab2_path = os.path.join(os.getcwd(), "lab2")
+
+#change directory
 os.chdir(lab2_path)
-print("CHANGED DIRECTORIES? :" + os.getcwd())
-subprocess.Popen("npm install express", shell=True)
-#os.system("npm install express")
-print("RAN NPM INSTALL")
+print("current directory: " + os.getcwd())
 
-subprocess.Popen("npx esbuild main.js --bundle --minify --sourcemap --outfile=./emojis/static/main.min.js", shell=True)
-#subprocess.Popen("python manage.py makemigrations", shell=True)
-#subprocess.Popen("python manage.py migrate", shell=True)
-subprocess.Popen("python3 manage.py runserver 0.0.0.0:8000", shell=True)
-#
+#install emoji-mart and esbuild
+os.system("npm install")
 
+#Transpile main.js to the static directory
+os.system("npx esbuild main.js --bundle --minify --sourcemap --outfile=./emojis/static/main.min.js")
+
+#runserver
+os.system("python3 manage.py runserver 0.0.0.0:8000")
